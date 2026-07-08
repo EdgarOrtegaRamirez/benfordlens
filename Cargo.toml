@@ -1,0 +1,36 @@
+[package]
+name = "benfordlens"
+version = "0.1.0"
+edition = "2021"
+description = "A comprehensive Benford's Law analysis toolkit for fraud detection, data integrity validation, and anomaly detection"
+license = "MIT"
+repository = "https://github.com/EdgarOrtegaRamirez/benfordlens"
+homepage = "https://github.com/EdgarOrtegaRamirez/benfordlens"
+documentation = "https://github.com/EdgarOrtegaRamirez/benfordlens"
+keywords = ["benford", "fraud-detection", "statistics", "data-analysis", "forensics"]
+categories = ["command-line-utilities", "mathematics", "science"]
+
+[lib]
+name = "benfordlens"
+path = "src/lib.rs"
+
+[[bin]]
+name = "benfordlens"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.6", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+csv = "1.4"
+anyhow = "1.0"
+
+[dev-dependencies]
+assert_cmd = "2.0"
+predicates = "3.0"
+tempfile = "3.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

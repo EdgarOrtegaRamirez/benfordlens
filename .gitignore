@@ -1,0 +1,30 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependency files
+/.crates
+/.cargo-ok
+Cargo.lock
+
+# rust
+/target/
+**/*.rs.bk
+*.pdb
+*.db
+
+# docs
+/target/doc
+
+# misc
+.DS_Store
+*.swp
+*.swo
+*~
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# output files from CLI usage (not test fixtures)
