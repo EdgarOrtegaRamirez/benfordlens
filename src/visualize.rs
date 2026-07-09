@@ -7,7 +7,7 @@ use crate::analysis::AnalysisResult;
 /// Each bar represents the observed proportion, with the expected (Benford)
 /// proportion shown as a marker.
 pub fn bar_chart(result: &AnalysisResult, width: usize) -> String {
-    let width = width.max(20).min(80);
+    let width = width.clamp(20, 80);
     let mut out = String::new();
 
     out.push_str(&format!(
@@ -47,8 +47,8 @@ pub fn bar_chart(result: &AnalysisResult, width: usize) -> String {
         let exp_pos = ((dc.expected_proportion / max_prop) * bar_width as f64).round() as usize;
 
         let mut bar: Vec<char> = vec![' '; bar_width];
-        for i in 0..obs_len.min(bar_width) {
-            bar[i] = '█';
+        for item in bar.iter_mut().take(obs_len.min(bar_width)) {
+            *item = '█';
         }
         if exp_pos < bar_width && exp_pos > 0 {
             if bar[exp_pos - 1] == ' ' {

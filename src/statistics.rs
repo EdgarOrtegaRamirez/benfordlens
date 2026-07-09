@@ -277,7 +277,7 @@ fn chi_square_p_value(x: f64, df: usize) -> f64 {
     let k = df as f64 / 2.0;
     let p = regularized_lower_gamma(k, x / 2.0);
     // p-value = 1 - CDF = 1 - P(x; k)
-    (1.0 - p).max(0.0).min(1.0)
+    (1.0 - p).clamp(0.0, 1.0)
 }
 
 /// Regularized lower incomplete gamma function: P(a, x) = gamma_lower(a, x) / Gamma(a).
@@ -348,6 +348,7 @@ fn log_gamma(x: f64) -> f64 {
         return ((std::f64::consts::PI / x).sin().abs()).ln() - log_gamma(1.0 - x);
     }
     // Lanczos coefficients (g=7)
+    #[allow(clippy::excessive_precision)]
     const COEFF: [f64; 9] = [
         0.99999999999980993,
         676.5203681218851,
@@ -430,7 +431,7 @@ fn ks_p_value(d: f64, n: f64) -> f64 {
         }
     }
     let p = 2.0 * p;
-    p.max(0.0).min(1.0)
+    p.clamp(0.0, 1.0)
 }
 
 #[cfg(test)]

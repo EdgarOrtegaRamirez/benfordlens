@@ -51,11 +51,11 @@ pub fn generate_combined_report(
             let mut out = String::new();
             out.push_str(&text_header(dataset));
             for r in results {
-                out.push_str("\n");
+                out.push('\n');
                 out.push_str(&crate::visualize::summary_chart(r));
-                out.push_str("\n");
+                out.push('\n');
                 out.push_str(&crate::visualize::bar_chart(r, 70));
-                out.push_str("\n");
+                out.push('\n');
             }
             out
         }
@@ -95,11 +95,11 @@ pub fn generate_combined_report(
 fn text_report(result: &AnalysisResult, dataset: &Dataset) -> String {
     let mut out = String::new();
     out.push_str(&text_header(dataset));
-    out.push_str("\n");
+    out.push('\n');
     out.push_str(&crate::visualize::summary_chart(result));
-    out.push_str("\n");
+    out.push('\n');
     out.push_str(&crate::visualize::bar_chart(result, 70));
-    out.push_str("\n");
+    out.push('\n');
     out.push_str(&crate::visualize::deviation_chart(result));
     out
 }
@@ -162,14 +162,14 @@ fn markdown_header(dataset: &Dataset) -> String {
     if dataset.skipped > 0 {
         out.push_str(&format!("- **Skipped (invalid):** {}\n", dataset.skipped));
     }
-    out.push_str("\n");
+    out.push('\n');
     out
 }
 
 fn markdown_section(r: &AnalysisResult) -> String {
     let mut out = String::new();
     out.push_str(&format!("## {} Analysis\n\n", r.position.label()));
-    out.push_str(&format!("| Metric | Value |\n|--------|-------|\n"));
+    out.push_str("| Metric | Value |\n|--------|-------|\n");
     out.push_str(&format!("| Sample size | {} |\n", r.sample_size));
     out.push_str(&format!(
         "| Risk score | {:.1}/100 ({}) |\n",
@@ -190,9 +190,9 @@ fn markdown_section(r: &AnalysisResult) -> String {
         r.ks.statistic, r.ks.p_value
     ));
 
-    out.push_str(&format!(
+    out.push_str(
         "| Digit | Observed | Expected | Obs% | Exp% | Z-stat | Sig |\n"
-    ));
+    );
     out.push_str("|-------|----------|----------|------|------|--------|-----|\n");
     for dev in &r.deviations {
         let sig = if dev.significant { "✓" } else { "" };
@@ -207,7 +207,7 @@ fn markdown_section(r: &AnalysisResult) -> String {
             sig
         ));
     }
-    out.push_str("\n");
+    out.push('\n');
     out
 }
 

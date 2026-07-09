@@ -424,7 +424,7 @@ fn run_sample(count: usize, output: Option<PathBuf>) -> Result<()> {
         let u = rng.next_f64();
         // Inverse CDF: first digit d where log10(1+d) >= u, i.e., d = ceil(10^u - 1)
         let d = (10f64.powf(u) - 1.0).ceil() as u32;
-        let d = d.max(1).min(9);
+        let d = d.clamp(1, 9);
         // Add random mantissa for variety
         let mantissa = d as f64 + rng.next_f64();
         let exponent = (rng.next_u32() % 6) as i32 - 2; // 10^-2 to 10^3

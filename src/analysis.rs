@@ -179,7 +179,7 @@ fn compute_risk(chi: &ChiSquareResult, mad: &MadResult, ks: &KsResult) -> (f64, 
         0.0
     } else {
         let neg_log = -chi.p_value.log10();
-        (neg_log * 10.0).min(40.0).max(0.0)
+        (neg_log * 10.0).clamp(0.0, 40.0)
     };
 
     // MAD contribution (0-30 points): based on conformity level
@@ -193,12 +193,12 @@ fn compute_risk(chi: &ChiSquareResult, mad: &MadResult, ks: &KsResult) -> (f64, 
     // KS contribution (0-30 points): ratio of statistic to critical value
     let ks_contrib = if ks.critical_value_05 > 0.0 {
         let ratio = ks.statistic / ks.critical_value_05;
-        (ratio * 15.0).min(30.0).max(0.0)
+        (ratio * 15.0).clamp(0.0, 30.0)
     } else {
         0.0
     };
 
-    let score = (chi_contrib + mad_contrib + ks_contrib).min(100.0).max(0.0);
+    let score = (chi_contrib + mad_contrib + ks_contrib).clamp(0.0, 100.0);
     let level = if score < 20.0 {
         RiskLevel::Low
     } else if score < 45.0 {
