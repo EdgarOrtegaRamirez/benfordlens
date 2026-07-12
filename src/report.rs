@@ -190,9 +190,7 @@ fn markdown_section(r: &AnalysisResult) -> String {
         r.ks.statistic, r.ks.p_value
     ));
 
-    out.push_str(
-        "| Digit | Observed | Expected | Obs% | Exp% | Z-stat | Sig |\n"
-    );
+    out.push_str("| Digit | Observed | Expected | Obs% | Exp% | Z-stat | Sig |\n");
     out.push_str("|-------|----------|----------|------|------|--------|-----|\n");
     for dev in &r.deviations {
         let sig = if dev.significant { "✓" } else { "" };
